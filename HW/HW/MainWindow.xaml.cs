@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,45 @@ namespace HW
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ObservableCollection<Book> books;
+
         public MainWindow()
         {
             InitializeComponent();
+            using (var context = new HwContext())
+            {
+                books = new ObservableCollection<Book>(context.Books.ToList());
+            }
+            dataGrid.ItemsSource = books;
+        }
+
+        private void UpdateBtnClick(object sender, RoutedEventArgs e)
+        {
+            using (var context = new HwContext())
+            {
+                books.ToList().ForEach(x => context.Update(x));
+                context.SaveChanges();
+            }
+        }
+
+        private void AddBtnClick(object sender, RoutedEventArgs e)
+        {
+            using (var context = new HwContext())
+            {
+                int.TryParse(priceTB.Text, out var price);
+                context.Add(new Book
+                {
+                    Author = authorTB.Text,
+                    Price = price,
+                    TitleName = titleNameTB.Text
+                });
+                priceTB.Text = "";
+                authorTB.Text = "";
+                titleNameTB.Text = "";
+                context.SaveChanges();
+                books = new ObservableCollection<Book>(context.Books.ToList());
+                dataGrid.ItemsSource = books;
+            }
         }
     }
 }

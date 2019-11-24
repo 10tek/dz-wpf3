@@ -7,6 +7,20 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <DataGrid AutoGenerateColumns="True" Name="dataGrid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding TitleName}" Header="Название книги" Width="300"/>
+                <DataGridTextColumn Binding="{Binding Author}" Header="Автор" Width="300"/>
+                <DataGridTextColumn Binding="{Binding Price}" Header="Цена" Width="300"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Author:" Width="100" Height="30" Margin="300,250,0,0"></Label>
+        <Label Content="Title Name:" Width="100" Height="30" Margin="0,250,0,0"></Label>
+        <Label Content="Price:" Width="100" Height="30" Margin="0,250,300,0"></Label>
+        <TextBox x:Name="authorTB" Width="100" Height="30" Margin="300,300,0,0"></TextBox>
+        <TextBox x:Name="titleNameTB" Width="100" Height="30" Margin="0,300,0,0"></TextBox>
+        <TextBox x:Name="priceTB" Width="100" Height="30" Margin="0,300,300,0"></TextBox>
+        <Button x:Name="updateBtn" Click="UpdateBtnClick" Height="30" Width="100" Content="Обновить" Margin="600,200,0,0"></Button>
+        <Button x:Name="addBtn" Click="AddBtnClick" Height="30" Width="100" Content="Добавить" Margin="600,300,0,0"></Button>
     </Grid>
 </Window>
